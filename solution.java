@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class solution {
+public class Solution {
 
     public static int[] twoSum(int[] nums, int target) {
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -25,3 +25,4 @@ public class solution {
         System.out.println(result[0] + " " + result[1]);
     }
 }
+
