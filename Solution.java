@@ -1,40 +1,20 @@
-import java.util.Stack;
-
 class Solution {
+    public int removeDuplicates(int[] nums) 
+    {
+       
+        if (nums.length == 0) return 0;
 
-    public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
+        int k = 1;
 
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-
-           
-            if (ch == '(' || ch == '{' || ch == '[') {
-                stack.push(ch);
-            }
-  
-            else {
-             
-                if (stack.isEmpty()) return false;
-
-                char top = stack.pop();
-
-                if (ch == ')' && top != '(') return false;
-                if (ch == '}' && top != '{') return false;
-                if (ch == ']' && top != '[') return false;
+        for (int i = 1; i < nums.length; i++) 
+        {
+            if (nums[i] != nums[i - 1]) 
+            {
+                nums[k] = nums[i];
+                k++;
             }
         }
 
-        return stack.isEmpty();
-    }
-
-    public static void main(String[] args) {
-        Solution sol = new Solution();
-
-        System.out.println(sol.isValid("()"));     
-        System.out.println(sol.isValid("()[]{}")); 
-        System.out.println(sol.isValid("(]"));      
-        System.out.println(sol.isValid("([)]"));    
-        System.out.println(sol.isValid("{[]}"));   
+        return k;
     }
 }
