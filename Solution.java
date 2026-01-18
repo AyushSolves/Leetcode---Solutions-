@@ -1,22 +1,30 @@
+import java.util.Arrays;
+
 class Solution {
-    public int searchInsert(int[] nums, int target) {
-        int low = 0;
-        int high = nums.length - 1;
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
+    public int[] plusOne(int[] digits) {
 
-            if (nums[mid] == target) {
-                return mid;  
-            } 
-            else if (nums[mid] < target) {
-                low = mid + 1;
-            } 
-            else {
-                high = mid - 1;
+        for (int i = digits.length - 1; i >= 0; i--) {
+
+            if (digits[i] < 9) {
+                digits[i]++;
+                return digits;
             }
+
+            digits[i] = 0;
         }
 
-        return low;
+        int[] result = new int[digits.length + 1];
+        result[0] = 1;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+
+        int[] digits = {9, 9, 9};   // Test input
+        int[] answer = sol.plusOne(digits);
+
+        System.out.println(Arrays.toString(answer));
     }
 }
