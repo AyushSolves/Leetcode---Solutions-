@@ -1,51 +1,52 @@
-import java.util.Scanner;
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
 
 class Solution 
 {
-    public int mySqrt(int x) 
+    public ListNode deleteDuplicates(ListNode head) 
     {
-        if (x == 0 || x == 1) 
-        {
-            return x;
+        if (head == null || head.next == null) {
+            return head;
         }
 
-        int low = 1, high = x;
-        int ans = 0;
-        
-        while (low <= high) 
-        {
-            int mid = low + (high - low) / 2;
-            long square = (long) mid * mid;   
+        ListNode current = head;
 
-            if (square == x) 
+        while (current != null && current.next != null) {
+            if (current.val == current.next.val) 
             {
-                return mid;
-            } 
-            else if (square < x) 
-            {
-                ans = mid;        
-                low = mid + 1;  
+
+                current.next = current.next.next;
             } 
             else 
             {
-                high = mid - 1;
+                current = current.next;
             }
         }
-        return ans;  
+
+        return head;
     }
 
-    public static void main(String[] args) 
-    {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(1);
+        head.next.next = new ListNode(2);
+        head.next.next.next = new ListNode(3);
+        head.next.next.next.next = new ListNode(3);
+
         Solution sol = new Solution();
+        ListNode result = sol.deleteDuplicates(head);
 
-        System.out.print("Enter a non-negative number: ");
-        int x = sc.nextInt();
-
-        int result = sol.mySqrt(x);
-
-        System.out.println("Square root (rounded down) = " + result);
-
-        sc.close();
+        while (result != null) {
+            System.out.print(result.val + " ");
+            result = result.next;
+        }
     }
 }
