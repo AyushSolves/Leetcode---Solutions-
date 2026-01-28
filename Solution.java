@@ -1,48 +1,51 @@
-class TreeNode 
-{
+class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
 
-    TreeNode(int val) 
-    {
+    TreeNode(int val) {
         this.val = val;
-        this.left = null;
-        this.right = null;
     }
 }
 
 class Solution 
 {
-    public boolean isSymmetric(TreeNode root) 
+
+    public TreeNode sortedArrayToBST(int[] nums) 
     {
-        if (root == null) return true;
-        return isMirror(root.left, root.right);
+        return buildBST(nums, 0, nums.length - 1);
     }
 
-    private boolean isMirror(TreeNode t1, TreeNode t2) 
+    private TreeNode buildBST(int[] nums, int left, int right) 
     {
-        if (t1 == null && t2 == null) return true;
-        if (t1 == null || t2 == null) return false;
+        if (left > right) return null;
 
-        return (t1.val == t2.val)
-                && isMirror(t1.left, t2.right)
-                && isMirror(t1.right, t2.left);
+        int mid = left + (right - left) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+
+        root.left = buildBST(nums, left, mid - 1);
+        root.right = buildBST(nums, mid + 1, right);
+
+        return root;
+    }
+
+    public void inorder(TreeNode root) 
+    {
+        if (root == null) return;
+        inorder(root.left);
+        System.out.print(root.val + " ");
+        inorder(root.right);
     }
 
     public static void main(String[] args) 
     {
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(2);
-
-        root.left.left = new TreeNode(3);
-        root.left.right = new TreeNode(4);
-
-        root.right.left = new TreeNode(4);
-        root.right.right = new TreeNode(3);
-
         Solution sol = new Solution();
-        System.out.println(sol.isSymmetric(root));
+
+        int[] nums = {-10, -3, 0, 5, 9};
+
+        TreeNode root = sol.sortedArrayToBST(nums);
+
+        System.out.print("Inorder Traversal of BST: ");
+        sol.inorder(root);
     }
 }
