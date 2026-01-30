@@ -8,44 +8,38 @@ class TreeNode {
     }
 }
 
-class Solution 
-{
+class Solution {
 
-    public TreeNode sortedArrayToBST(int[] nums) 
+    public int minDepth(TreeNode root) 
     {
-        return buildBST(nums, 0, nums.length - 1);
+        if (root == null) {
+            return 0;
+        }
+
+        if (root.left == null && root.right == null) 
+        {
+            return 1;
+        }
+
+        if (root.left == null) 
+        {
+            return 1 + minDepth(root.right);
+        }
+        if (root.right == null) 
+        {
+            return 1 + minDepth(root.left);
+        }
+        return 1 + Math.min(minDepth(root.left), minDepth(root.right));
     }
-
-    private TreeNode buildBST(int[] nums, int left, int right) 
-    {
-        if (left > right) return null;
-
-        int mid = left + (right - left) / 2;
-        TreeNode root = new TreeNode(nums[mid]);
-
-        root.left = buildBST(nums, left, mid - 1);
-        root.right = buildBST(nums, mid + 1, right);
-
-        return root;
-    }
-
-    public void inorder(TreeNode root) 
-    {
-        if (root == null) return;
-        inorder(root.left);
-        System.out.print(root.val + " ");
-        inorder(root.right);
-    }
-
     public static void main(String[] args) 
     {
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
+
         Solution sol = new Solution();
-
-        int[] nums = {-10, -3, 0, 5, 9};
-
-        TreeNode root = sol.sortedArrayToBST(nums);
-
-        System.out.print("Inorder Traversal of BST: ");
-        sol.inorder(root);
+        System.out.println("Minimum Depth: " + sol.minDepth(root)); // 2
     }
 }
