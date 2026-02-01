@@ -1,45 +1,42 @@
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+import java.util.*;
 
-    TreeNode(int val) {
-        this.val = val;
-    }
-}
-
-class Solution {
-
-    public int minDepth(TreeNode root) 
+class Solution 
+{
+    public List<List<Integer>> generate(int numRows) 
     {
-        if (root == null) {
-            return 0;
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> row = new ArrayList<>();
+            for (int j = 0; j <= i; j++) 
+            {
+                if (j == 0 || j == i) 
+                {
+                    row.add(1);
+                } 
+
+                else 
+                {
+                    row.add(result.get(i-1).get(j-1) + result.get(i-1).get(j));
+                }
+            }
+
+            result.add(row);
         }
 
-        if (root.left == null && root.right == null) 
-        {
-            return 1;
-        }
-
-        if (root.left == null) 
-        {
-            return 1 + minDepth(root.right);
-        }
-        if (root.right == null) 
-        {
-            return 1 + minDepth(root.left);
-        }
-        return 1 + Math.min(minDepth(root.left), minDepth(root.right));
+        return result;
     }
+
     public static void main(String[] args) 
     {
-        TreeNode root = new TreeNode(3);
-        root.left = new TreeNode(9);
-        root.right = new TreeNode(20);
-        root.right.left = new TreeNode(15);
-        root.right.right = new TreeNode(7);
-
         Solution sol = new Solution();
-        System.out.println("Minimum Depth: " + sol.minDepth(root)); // 2
+
+        int numRows = 5;
+
+        List<List<Integer>> triangle = sol.generate(numRows);
+
+        for (List<Integer> row : triangle) 
+        {
+            System.out.println(row);
+        }
     }
 }
