@@ -1,42 +1,33 @@
-import java.util.*;
-
 class Solution 
 {
-    public List<List<Integer>> generate(int numRows) 
+
+    public int maxProfit(int[] prices) 
     {
-        List<List<Integer>> result = new ArrayList<>();
-        for (int i = 0; i < numRows; i++) {
-            List<Integer> row = new ArrayList<>();
-            for (int j = 0; j <= i; j++) 
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+
+        for (int price : prices) 
+        {
+            if (price < minPrice) 
             {
-                if (j == 0 || j == i) 
-                {
-                    row.add(1);
-                } 
-
-                else 
-                {
-                    row.add(result.get(i-1).get(j-1) + result.get(i-1).get(j));
-                }
+                minPrice = price;  
+            } else 
+            {
+                maxProfit = Math.max(maxProfit, price - minPrice);
             }
-
-            result.add(row);
         }
 
-        return result;
+        return maxProfit;
     }
 
     public static void main(String[] args) 
     {
         Solution sol = new Solution();
 
-        int numRows = 5;
+        int[] prices1 = {7, 1, 5, 3, 6, 4};
+        System.out.println("Max Profit: " + sol.maxProfit(prices1)); 
 
-        List<List<Integer>> triangle = sol.generate(numRows);
-
-        for (List<Integer> row : triangle) 
-        {
-            System.out.println(row);
-        }
+        int[] prices2 = {7, 6, 4, 3, 1};
+        System.out.println("Max Profit: " + sol.maxProfit(prices2)); 
     }
 }
