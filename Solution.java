@@ -1,33 +1,24 @@
-class Solution 
-{
+class Solution {
 
-    public int maxProfit(int[] prices) 
-    {
-        int minPrice = Integer.MAX_VALUE;
-        int maxProfit = 0;
+    public int singleNumber(int[] nums) {
+        int result = 0;
 
-        for (int price : prices) 
-        {
-            if (price < minPrice) 
-            {
-                minPrice = price;  
-            } else 
-            {
-                maxProfit = Math.max(maxProfit, price - minPrice);
-            }
+        for (int num : nums) {
+            result = result ^ num;   
         }
 
-        return maxProfit;
+        return result;
     }
 
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
         Solution sol = new Solution();
 
-        int[] prices1 = {7, 1, 5, 3, 6, 4};
-        System.out.println("Max Profit: " + sol.maxProfit(prices1)); 
+        int[] nums1 = {2, 2, 1};
+        int[] nums2 = {4, 1, 2, 1, 2};
+        int[] nums3 = {1};
 
-        int[] prices2 = {7, 6, 4, 3, 1};
-        System.out.println("Max Profit: " + sol.maxProfit(prices2)); 
+        System.out.println(sol.singleNumber(nums1)); 
+        System.out.println(sol.singleNumber(nums2)); 
+        System.out.println(sol.singleNumber(nums3)); 
     }
 }
