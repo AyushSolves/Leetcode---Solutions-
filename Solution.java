@@ -1,24 +1,44 @@
-class Solution {
+import java.util.*;
 
-    public int singleNumber(int[] nums) {
-        int result = 0;
+class TreeNode 
+{
+    int val;
+    TreeNode left, right;
 
-        for (int num : nums) {
-            result = result ^ num;   
-        }
+    TreeNode(int val) 
+    {
+        this.val = val;
+    }
+}
 
+class Solution 
+{
+
+    public List<Integer> preorderTraversal(TreeNode root) 
+    {
+        List<Integer> result = new ArrayList<>();
+        preorder(root, result);
         return result;
     }
 
-    public static void main(String[] args) {
+    private void preorder(TreeNode node, List<Integer> result) 
+    {
+        if (node == null) return;
+
+        result.add(node.val);     
+        preorder(node.left, result);  
+        preorder(node.right, result); 
+    }
+
+    public static void main(String[] args) 
+    {
+
+        TreeNode root = new TreeNode(1);
+        root.right = new TreeNode(2);
+        root.right.left = new TreeNode(3);
+
         Solution sol = new Solution();
 
-        int[] nums1 = {2, 2, 1};
-        int[] nums2 = {4, 1, 2, 1, 2};
-        int[] nums3 = {1};
-
-        System.out.println(sol.singleNumber(nums1)); 
-        System.out.println(sol.singleNumber(nums2)); 
-        System.out.println(sol.singleNumber(nums3)); 
+        System.out.println(sol.preorderTraversal(root));
     }
 }
