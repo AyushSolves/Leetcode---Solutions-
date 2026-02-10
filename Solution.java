@@ -1,44 +1,32 @@
-import java.util.*;
+import java.util.Scanner;
 
-class TreeNode 
-{
-    int val;
-    TreeNode left, right;
+public class Solution {
 
-    TreeNode(int val) 
-    {
-        this.val = val;
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter column number: ");
+        int n = sc.nextInt();
+
+        String result = convertToTitle(n);
+
+        System.out.println("Column Title: " + result);
     }
-}
 
-class Solution 
-{
+    static String convertToTitle(int n) {
 
-    public List<Integer> preorderTraversal(TreeNode root) 
-    {
-        List<Integer> result = new ArrayList<>();
-        preorder(root, result);
+        String result = "";
+
+        while (n > 0) {
+            n--;  // important
+
+            char ch = (char) ('A' + (n % 26));
+            result = ch + result;
+
+            n /= 26;
+        }
+
         return result;
-    }
-
-    private void preorder(TreeNode node, List<Integer> result) 
-    {
-        if (node == null) return;
-
-        result.add(node.val);     
-        preorder(node.left, result);  
-        preorder(node.right, result); 
-    }
-
-    public static void main(String[] args) 
-    {
-
-        TreeNode root = new TreeNode(1);
-        root.right = new TreeNode(2);
-        root.right.left = new TreeNode(3);
-
-        Solution sol = new Solution();
-
-        System.out.println(sol.preorderTraversal(root));
     }
 }
