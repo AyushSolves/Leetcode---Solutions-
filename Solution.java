@@ -1,32 +1,30 @@
 import java.util.Scanner;
 
-public class Solution {
+public class Solution 
+{
+
+    public static int titleToNumber(String s) 
+    {
+
+        int result = 0;
+
+        for (char ch : s.toCharArray()) 
+        {
+            result = result * 26 + (ch - 'A' + 1);
+        }
+
+        return result;
+    }
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter column number: ");
-        int n = sc.nextInt();
+        System.out.print("Enter column title: ");
+        String title = sc.next();
 
-        String result = convertToTitle(n);
+        System.out.println("Column Number: " + titleToNumber(title));
 
-        System.out.println("Column Title: " + result);
-    }
-
-    static String convertToTitle(int n) {
-
-        String result = "";
-
-        while (n > 0) {
-            n--;  // important
-
-            char ch = (char) ('A' + (n % 26));
-            result = ch + result;
-
-            n /= 26;
-        }
-
-        return result;
+        sc.close();
     }
 }
