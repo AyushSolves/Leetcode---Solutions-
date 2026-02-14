@@ -1,30 +1,55 @@
-import java.util.Scanner;
+class ListNode {
+    int val;
+    ListNode next;
 
-public class Solution 
-{
+    ListNode() {}
 
-    public static int titleToNumber(String s) 
-    {
+    ListNode(int val) {
+        this.val = val;
+    }
 
-        int result = 0;
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
+}
 
-        for (char ch : s.toCharArray()) 
-        {
-            result = result * 26 + (ch - 'A' + 1);
+public class Solution {
+
+    public ListNode removeElements(ListNode head, int val) {
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode current = dummy;
+
+        while (current.next != null) {
+            if (current.next.val == val) {
+                current.next = current.next.next;
+            } else {
+                current = current.next;
+            }
         }
 
-        return result;
+        return dummy.next;
     }
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        ListNode head = new ListNode(1,
+                new ListNode(2,
+                new ListNode(6,
+                new ListNode(3,
+                new ListNode(4,
+                new ListNode(5,
+                new ListNode(6)))))));
 
-        System.out.print("Enter column title: ");
-        String title = sc.next();
+        Solution sol = new Solution();
+        head = sol.removeElements(head, 6);
 
-        System.out.println("Column Number: " + titleToNumber(title));
-
-        sc.close();
+        while (head != null) {
+            System.out.print(head.val + " ");
+            head = head.next;
+        }
     }
 }
