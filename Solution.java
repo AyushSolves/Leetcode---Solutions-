@@ -1,61 +1,35 @@
-class ListNode 
-{
-    int val;
-    ListNode next;
-
-    ListNode() {}
-
-    ListNode(int val) 
-    {
-        this.val = val;
-    }
-
-    ListNode(int val, ListNode next) 
-    {
-        this.val = val;
-        this.next = next;
-    }
-}
+import java.util.*;
 
 public class Solution 
 {
-
-    public ListNode reverseList(ListNode head) 
+    public boolean containsNearbyDuplicate(int[] nums, int k) 
     {
+        Map<Integer, Integer> map = new HashMap<>();
 
-        ListNode prev = null;
-        ListNode curr = head;
+        for (int i = 0; i < nums.length; i++) {
 
-        while (curr != null) 
-        {
+            if (map.containsKey(nums[i])) {
 
-            ListNode nextTemp = curr.next;
+                int prevIndex = map.get(nums[i]);
 
-            curr.next = prev; 
+                if (i - prevIndex <= k) {
+                    return true;
+                }
+            }
 
-            prev = curr; 
-            curr = nextTemp; 
+            map.put(nums[i], i);
         }
 
-        return prev;
+        return false;
     }
-
     public static void main(String[] args) 
     {
 
-        ListNode head = new ListNode(1,
-                new ListNode(2,
-                new ListNode(3,
-                new ListNode(4,
-                new ListNode(5)))));
+        int[] nums = {1, 2, 3, 1};
+        int k = 3;
 
         Solution sol = new Solution();
 
-        head = sol.reverseList(head);
-
-        while (head != null) {
-            System.out.print(head.val + " ");
-            head = head.next;
-        }
+        System.out.println(sol.containsNearbyDuplicate(nums, k));
     }
 }
