@@ -1,35 +1,57 @@
 import java.util.*;
-
 public class Solution 
 {
-    public boolean containsNearbyDuplicate(int[] nums, int k) 
-    {
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for (int i = 0; i < nums.length; i++) {
-
-            if (map.containsKey(nums[i])) {
-
-                int prevIndex = map.get(nums[i]);
-
-                if (i - prevIndex <= k) {
-                    return true;
-                }
-            }
-
-            map.put(nums[i], i);
-        }
-
-        return false;
-    }
     public static void main(String[] args) 
     {
+        MyStack stack = new MyStack();
 
-        int[] nums = {1, 2, 3, 1};
-        int k = 3;
+        stack.push(1);
+        stack.push(2);
 
-        Solution sol = new Solution();
+        System.out.println("Top element: " + stack.top()); 
+        System.out.println("Popped element: " + stack.pop()); 
+        System.out.println("Is empty: " + stack.empty()); 
+    }
+}
 
-        System.out.println(sol.containsNearbyDuplicate(nums, k));
+class MyStack 
+{
+    private Queue<Integer> q1;
+    private Queue<Integer> q2;
+
+    public MyStack() 
+    {
+        q1 = new LinkedList<>();
+        q2 = new LinkedList<>();
+    }
+
+    public void push(int x) 
+    {
+
+        q2.add(x);
+
+        while (!q1.isEmpty()) 
+        {
+            q2.add(q1.remove());
+        }
+
+        Queue<Integer> temp = q1;
+        q1 = q2;
+        q2 = temp;
+    }
+
+    public int pop() 
+    {
+        return q1.remove();
+    }
+
+    public int top() 
+    {
+        return q1.peek();
+    }
+
+    public boolean empty() 
+    {
+        return q1.isEmpty();
     }
 }
