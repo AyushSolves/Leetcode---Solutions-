@@ -1,57 +1,53 @@
 import java.util.*;
-public class Solution 
+
+class Main 
 {
     public static void main(String[] args) 
     {
-        MyStack stack = new MyStack();
+        Solution sol = new Solution();
 
-        stack.push(1);
-        stack.push(2);
+        int[] nums = {0, 1, 2, 4, 5, 7};
 
-        System.out.println("Top element: " + stack.top()); 
-        System.out.println("Popped element: " + stack.pop()); 
-        System.out.println("Is empty: " + stack.empty()); 
+        List<String> result = sol.summaryRanges(nums);
+
+        System.out.println(result);
     }
 }
 
-class MyStack 
-{
-    private Queue<Integer> q1;
-    private Queue<Integer> q2;
+public class Solution {
 
-    public MyStack() 
+    public List<String> summaryRanges(int[] nums) 
     {
-        q1 = new LinkedList<>();
-        q2 = new LinkedList<>();
-    }
+        List<String> result = new ArrayList<>();
 
-    public void push(int x) 
-    {
-
-        q2.add(x);
-
-        while (!q1.isEmpty()) 
-        {
-            q2.add(q1.remove());
+        if (nums == null || nums.length == 0) {
+            return result;
         }
 
-        Queue<Integer> temp = q1;
-        q1 = q2;
-        q2 = temp;
-    }
+        int start = nums[0];
 
-    public int pop() 
-    {
-        return q1.remove();
-    }
+        for (int i = 1; i < nums.length; i++) 
+        {
 
-    public int top() 
-    {
-        return q1.peek();
-    }
+            if (nums[i] != nums[i - 1] + 1) 
+            {
 
-    public boolean empty() 
-    {
-        return q1.isEmpty();
+                if (start == nums[i - 1]) {
+                    result.add(String.valueOf(start));
+                } else {
+                    result.add(start + "->" + nums[i - 1]);
+                }
+
+                start = nums[i];
+            }
+        }
+
+        if (start == nums[nums.length - 1]) {
+            result.add(String.valueOf(start));
+        } else {
+            result.add(start + "->" + nums[nums.length - 1]);
+        }
+
+        return result;
     }
 }
