@@ -1,53 +1,57 @@
-import java.util.*;
-
-class Main 
+class ListNode 
 {
-    public static void main(String[] args) 
-    {
-        Solution sol = new Solution();
-
-        int[] nums = {0, 1, 2, 4, 5, 7};
-
-        List<String> result = sol.summaryRanges(nums);
-
-        System.out.println(result);
-    }
+    int val;
+    ListNode next;
+    ListNode(int val) { this.val = val; }
 }
 
-public class Solution {
+class Solution 
+{
 
-    public List<String> summaryRanges(int[] nums) 
+    public boolean isPalindrome(ListNode head) 
     {
-        List<String> result = new ArrayList<>();
 
-        if (nums == null || nums.length == 0) {
-            return result;
-        }
-
-        int start = nums[0];
-
-        for (int i = 1; i < nums.length; i++) 
+        if (head == null || head.next == null) 
         {
+            return true;
+        }
 
-            if (nums[i] != nums[i - 1] + 1) 
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) 
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode secondHalf = reverse(slow);
+
+        ListNode firstHalf = head;
+        while (secondHalf != null) 
+        {
+            if (firstHalf.val != secondHalf.val) 
             {
-
-                if (start == nums[i - 1]) {
-                    result.add(String.valueOf(start));
-                } else {
-                    result.add(start + "->" + nums[i - 1]);
-                }
-
-                start = nums[i];
+                return false;
             }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
 
-        if (start == nums[nums.length - 1]) {
-            result.add(String.valueOf(start));
-        } else {
-            result.add(start + "->" + nums[nums.length - 1]);
+        return true;
+    }
+
+    private ListNode reverse(ListNode head) 
+    {
+        ListNode prev = null;
+
+        while (head != null) {
+            ListNode nextNode = head.next;
+            head.next = prev;
+            prev = head;
+            head = nextNode;
         }
 
-        return result;
+        return prev;
     }
 }
