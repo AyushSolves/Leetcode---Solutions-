@@ -1,48 +1,39 @@
-import java.util.*;
 
-public class Solution {
+public class Solution 
+{
 
-    static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int val) { this.val = val; }
-    }
+    public boolean isUgly(int n) 
+    {
 
-    public List<String> binaryTreePaths(TreeNode root) {
-        List<String> result = new ArrayList<>();
-        
-        if (root == null) {
-            return result;
+        if (n <= 0) 
+        {
+            return false;
         }
 
-        dfs(root, "", result);
-        return result;
-    }
+        int[] factors = {2, 3, 5};
 
-    private void dfs(TreeNode node, String path, List<String> result) {
-
-        if (node == null) return;
-
-        if (node.left == null && node.right == null) {
-            result.add(path + node.val);
-            return;
+        for (int factor : factors) 
+        {
+            while (n % factor == 0) 
+            {
+                n /= factor;
+            }
         }
 
-        dfs(node.left, path + node.val + "->", result);
-        dfs(node.right, path + node.val + "->", result);
+        return n == 1;
     }
 
     public static void main(String[] args) 
     {
 
         Solution sol = new Solution();
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(3);
-        root.left.right = new TreeNode(5);
 
-        List<String> result = sol.binaryTreePaths(root);
-        System.out.println(result);
+        int n1 = 6;
+        int n2 = 1;
+        int n3 = 14;
+
+        System.out.println("Input: " + n1 + " -> " + sol.isUgly(n1)); // true
+        System.out.println("Input: " + n2 + " -> " + sol.isUgly(n2)); // true
+        System.out.println("Input: " + n3 + " -> " + sol.isUgly(n3)); // false
     }
 }
