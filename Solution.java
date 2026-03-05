@@ -1,39 +1,40 @@
-
 public class Solution 
 {
+    static int bad = 4;
 
-    public boolean isUgly(int n) 
+    public boolean isBadVersion(int version) 
     {
+        return version >= bad;
+    }
 
-        if (n <= 0) 
+    public int firstBadVersion(int n) 
+    {
+        int left = 1;
+        int right = n;
+
+        while (left < right) 
         {
-            return false;
-        }
 
-        int[] factors = {2, 3, 5};
+            int mid = left + (right - left) / 2;
 
-        for (int factor : factors) 
-        {
-            while (n % factor == 0) 
+            if (isBadVersion(mid)) 
             {
-                n /= factor;
+                right = mid;
+            } 
+            else 
+            {
+                left = mid + 1;
             }
         }
 
-        return n == 1;
+        return left;
     }
 
     public static void main(String[] args) 
     {
-
         Solution sol = new Solution();
 
-        int n1 = 6;
-        int n2 = 1;
-        int n3 = 14;
-
-        System.out.println("Input: " + n1 + " -> " + sol.isUgly(n1)); // true
-        System.out.println("Input: " + n2 + " -> " + sol.isUgly(n2)); // true
-        System.out.println("Input: " + n3 + " -> " + sol.isUgly(n3)); // false
+        int n = 5;
+        System.out.println(sol.firstBadVersion(n));
     }
 }
