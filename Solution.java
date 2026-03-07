@@ -1,40 +1,43 @@
-public class Solution 
-{
-    static int bad = 4;
+import java.util.*;
 
-    public boolean isBadVersion(int version) 
-    {
-        return version >= bad;
-    }
+public class Solution {
 
-    public int firstBadVersion(int n) 
-    {
-        int left = 1;
-        int right = n;
+    public boolean wordPattern(String pattern, String s) {
 
-        while (left < right) 
-        {
+        String[] words = s.split(" ");
 
-            int mid = left + (right - left) / 2;
+        if (pattern.length() != words.length) {
+            return false;
+        }
 
-            if (isBadVersion(mid)) 
-            {
-                right = mid;
+        HashMap<Character, String> map = new HashMap<>();
+
+        for (int i = 0; i < pattern.length(); i++) {
+
+            char c = pattern.charAt(i);
+
+            if (map.containsKey(c)) {
+                if (!map.get(c).equals(words[i])) {
+                    return false;
+                }
             } 
-            else 
-            {
-                left = mid + 1;
+            else {
+                if (map.containsValue(words[i])) {
+                    return false;
+                }
+
+                map.put(c, words[i]);
             }
         }
 
-        return left;
+        return true;
     }
 
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
+
         Solution sol = new Solution();
 
-        int n = 5;
-        System.out.println(sol.firstBadVersion(n));
+        System.out.println(sol.wordPattern("abba", "dog cat cat dog")); // true
+        System.out.println(sol.wordPattern("abba", "dog cat cat fish")); // false
     }
 }
