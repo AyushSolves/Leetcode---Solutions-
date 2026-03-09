@@ -1,43 +1,29 @@
 import java.util.*;
 
-public class Solution {
+class NumArray {
 
-    public boolean wordPattern(String pattern, String s) {
+    int[] prefix;
 
-        String[] words = s.split(" ");
+    public NumArray(int[] nums) {
+        prefix = new int[nums.length + 1];
 
-        if (pattern.length() != words.length) {
-            return false;
+        for (int i = 0; i < nums.length; i++) {
+            prefix[i + 1] = prefix[i] + nums[i];
         }
+    }
 
-        HashMap<Character, String> map = new HashMap<>();
-
-        for (int i = 0; i < pattern.length(); i++) {
-
-            char c = pattern.charAt(i);
-
-            if (map.containsKey(c)) {
-                if (!map.get(c).equals(words[i])) {
-                    return false;
-                }
-            } 
-            else {
-                if (map.containsValue(words[i])) {
-                    return false;
-                }
-
-                map.put(c, words[i]);
-            }
-        }
-
-        return true;
+    public int sumRange(int left, int right) {
+        return prefix[right + 1] - prefix[left];
     }
 
     public static void main(String[] args) {
 
-        Solution sol = new Solution();
+        int[] nums = {-2, 0, 3, -5, 2, -1};
 
-        System.out.println(sol.wordPattern("abba", "dog cat cat dog")); // true
-        System.out.println(sol.wordPattern("abba", "dog cat cat fish")); // false
+        NumArray obj = new NumArray(nums);
+
+        System.out.println(obj.sumRange(0,2)); // 1
+        System.out.println(obj.sumRange(2,5)); // -1
+        System.out.println(obj.sumRange(0,5)); // -3
     }
 }
