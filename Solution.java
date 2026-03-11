@@ -1,29 +1,26 @@
 import java.util.*;
 
-class NumArray {
+public class Solution {
 
-    int[] prefix;
+    public int[] countBits(int n) {
 
-    public NumArray(int[] nums) {
-        prefix = new int[nums.length + 1];
+        int[] ans = new int[n + 1];
 
-        for (int i = 0; i < nums.length; i++) {
-            prefix[i + 1] = prefix[i] + nums[i];
+        for (int i = 1; i <= n; i++) {
+            ans[i] = ans[i >> 1] + (i & 1);
         }
-    }
 
-    public int sumRange(int left, int right) {
-        return prefix[right + 1] - prefix[left];
+        return ans;
     }
 
     public static void main(String[] args) {
 
-        int[] nums = {-2, 0, 3, -5, 2, -1};
+        Solution sol = new Solution();
 
-        NumArray obj = new NumArray(nums);
+        int n = 5;
 
-        System.out.println(obj.sumRange(0,2)); // 1
-        System.out.println(obj.sumRange(2,5)); // -1
-        System.out.println(obj.sumRange(0,5)); // -3
+        int[] result = sol.countBits(n);
+
+        System.out.println(Arrays.toString(result));
     }
 }
