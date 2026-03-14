@@ -2,25 +2,30 @@ import java.util.*;
 
 public class Solution {
 
-    public int[] countBits(int n) {
+    public void reverseString(char[] s) {
 
-        int[] ans = new int[n + 1];
+        int left = 0;
+        int right = s.length - 1;
 
-        for (int i = 1; i <= n; i++) {
-            ans[i] = ans[i >> 1] + (i & 1);
+        while (left < right) {
+
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+
+            left++;
+            right--;
         }
-
-        return ans;
     }
 
     public static void main(String[] args) {
 
         Solution sol = new Solution();
 
-        int n = 5;
+        char[] s = {'h','e','l','l','o'};
 
-        int[] result = sol.countBits(n);
+        sol.reverseString(s);
 
-        System.out.println(Arrays.toString(result));
+        System.out.println(Arrays.toString(s));
     }
 }
