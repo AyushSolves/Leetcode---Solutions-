@@ -1,31 +1,42 @@
+
 import java.util.*;
 
 public class Solution {
 
-    public void reverseString(char[] s) {
+    public int[] intersection(int[] nums1, int[] nums2) {
 
-        int left = 0;
-        int right = s.length - 1;
+        HashSet<Integer> set1 = new HashSet<>();
+        HashSet<Integer> result = new HashSet<>();
 
-        while (left < right) {
-
-            char temp = s[left];
-            s[left] = s[right];
-            s[right] = temp;
-
-            left++;
-            right--;
+        for (int num : nums1) {
+            set1.add(num);
         }
+
+        for (int num : nums2) {
+            if (set1.contains(num)) {
+                result.add(num);
+            }
+        }
+
+        int[] ans = new int[result.size()];
+        int i = 0;
+
+        for (int num : result) {
+            ans[i++] = num;
+        }
+
+        return ans;
     }
 
     public static void main(String[] args) {
 
         Solution sol = new Solution();
 
-        char[] s = {'h','e','l','l','o'};
+        int[] nums1 = {1, 2, 2, 1};
+        int[] nums2 = {2, 2};
 
-        sol.reverseString(s);
+        int[] res = sol.intersection(nums1, nums2);
 
-        System.out.println(Arrays.toString(s));
+        System.out.println(Arrays.toString(res));
     }
 }
