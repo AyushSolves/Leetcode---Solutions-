@@ -1,42 +1,41 @@
-
-import java.util.*;
-
 public class Solution {
 
-    public int[] intersection(int[] nums1, int[] nums2) {
+    public boolean isPerfectSquare(int num) {
 
-        HashSet<Integer> set1 = new HashSet<>();
-        HashSet<Integer> result = new HashSet<>();
-
-        for (int num : nums1) {
-            set1.add(num);
+        if (num < 2) {
+            return true;
         }
 
-        for (int num : nums2) {
-            if (set1.contains(num)) {
-                result.add(num);
+        long left = 1;
+        long right = num;
+
+        while (left <= right) {
+
+            long mid = left + (right - left) / 2;
+            long square = mid * mid;
+
+            if (square == num) {
+                return true;
+            } 
+            else if (square < num) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
             }
         }
 
-        int[] ans = new int[result.size()];
-        int i = 0;
-
-        for (int num : result) {
-            ans[i++] = num;
-        }
-
-        return ans;
+        return false;
     }
 
     public static void main(String[] args) {
 
         Solution sol = new Solution();
 
-        int[] nums1 = {1, 2, 2, 1};
-        int[] nums2 = {2, 2};
+        int num1 = 16;
+        int num2 = 14;
 
-        int[] res = sol.intersection(nums1, nums2);
-
-        System.out.println(Arrays.toString(res));
+        System.out.println(num1 + " -> " + sol.isPerfectSquare(num1)); // true
+        System.out.println(num2 + " -> " + sol.isPerfectSquare(num2)); // false
     }
 }
