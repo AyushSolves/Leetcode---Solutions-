@@ -1,30 +1,31 @@
-
 public class Solution {
 
-    public boolean canConstruct(String ransomNote, String magazine) {
+    public char findTheDifference(String s, String t) {
 
-        int[] count = new int[26];
+        char result = 0;
 
-        for (char c : magazine.toCharArray()) {
-            count[c - 'a']++;
+        for (char c : s.toCharArray()) {
+            result ^= c;
         }
 
-        for (char c : ransomNote.toCharArray()) {
-            if (count[c - 'a'] == 0) {
-                return false;
-            }
-            count[c - 'a']--;
+        for (char c : t.toCharArray()) {
+            result ^= c;
         }
 
-        return true;
+        return result;
     }
 
     public static void main(String[] args) {
 
         Solution sol = new Solution();
 
-        System.out.println(sol.canConstruct("a", "b"));     // false
-        System.out.println(sol.canConstruct("aa", "ab"));   // false
-        System.out.println(sol.canConstruct("aa", "aab"));  // true
+        String s1 = "abcd";
+        String t1 = "abcde";
+
+        String s2 = "";
+        String t2 = "y";
+
+        System.out.println(sol.findTheDifference(s1, t1)); // e
+        System.out.println(sol.findTheDifference(s2, t2)); // y
     }
 }
