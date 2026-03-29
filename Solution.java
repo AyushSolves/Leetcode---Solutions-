@@ -1,29 +1,36 @@
+import java.util.*;
+
 public class Solution {
 
-    public String toHex(int num) {
+    public List<String> fizzBuzz(int n) {
 
-        if (num == 0) return "0";
+        List<String> result = new ArrayList<>();
 
-        char[] hex = "0123456789abcdef".toCharArray();
-        StringBuilder result = new StringBuilder();
+        for (int i = 1; i <= n; i++) {
 
-        while (num != 0) {
-            int digit = num & 15; // last 4 bits
-            result.append(hex[digit]);
-            num >>>= 4; // unsigned right shift
+            if (i % 3 == 0 && i % 5 == 0) {
+                result.add("FizzBuzz");
+            } else if (i % 3 == 0) {
+                result.add("Fizz");
+            } else if (i % 5 == 0) {
+                result.add("Buzz");
+            } else {
+                result.add(String.valueOf(i));
+            }
         }
 
-        return result.reverse().toString();
+        return result;
     }
 
+    // For VS Code testing
     public static void main(String[] args) {
 
         Solution sol = new Solution();
 
-        int num1 = 26;
-        int num2 = -1;
+        int n = 15;
 
-        System.out.println(num1 + " -> " + sol.toHex(num1)); // 1a
-        System.out.println(num2 + " -> " + sol.toHex(num2)); // ffffffff
+        List<String> ans = sol.fizzBuzz(n);
+
+        System.out.println(ans);
     }
 }
