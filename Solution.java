@@ -1,36 +1,41 @@
-import java.util.*;
 
 public class Solution {
 
-    public List<String> fizzBuzz(int n) {
+    public String addStrings(String num1, String num2) {
 
-        List<String> result = new ArrayList<>();
+        StringBuilder result = new StringBuilder();
 
-        for (int i = 1; i <= n; i++) {
+        int i = num1.length() - 1;
+        int j = num2.length() - 1;
+        int carry = 0;
 
-            if (i % 3 == 0 && i % 5 == 0) {
-                result.add("FizzBuzz");
-            } else if (i % 3 == 0) {
-                result.add("Fizz");
-            } else if (i % 5 == 0) {
-                result.add("Buzz");
-            } else {
-                result.add(String.valueOf(i));
-            }
+        while (i >= 0 || j >= 0 || carry > 0) {
+
+            int digit1 = (i >= 0) ? num1.charAt(i) - '0' : 0;
+            int digit2 = (j >= 0) ? num2.charAt(j) - '0' : 0;
+
+            int sum = digit1 + digit2 + carry;
+
+            result.append(sum % 10);
+            carry = sum / 10;
+
+            i--;
+            j--;
         }
 
-        return result;
+        return result.reverse().toString();
     }
 
-    // For VS Code testing
     public static void main(String[] args) {
 
         Solution sol = new Solution();
 
-        int n = 15;
+        String num1 = "11";
+        String num2 = "123";
 
-        List<String> ans = sol.fizzBuzz(n);
+        System.out.println(sol.addStrings(num1, num2)); // 134
 
-        System.out.println(ans);
+        System.out.println(sol.addStrings("456", "77")); // 533
+        System.out.println(sol.addStrings("0", "0"));   // 0
     }
 }
