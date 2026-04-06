@@ -1,25 +1,24 @@
+import java.util.*;
+
 public class Solution {
 
-    public int arrangeCoins(int n) {
+    public int findContentChildren(int[] g, int[] s) {
 
-        long left = 0;
-        long right = n;
+        Arrays.sort(g); // greed factors
+        Arrays.sort(s); // cookie sizes
 
-        while (left <= right) {
-            long mid = left + (right - left) / 2;
+        int i = 0; // child pointer
+        int j = 0; // cookie pointer
 
-            long coins = mid * (mid + 1) / 2;
+        while (i < g.length && j < s.length) {
 
-            if (coins == n) {
-                return (int) mid;
-            } else if (coins < n) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
+            if (s[j] >= g[i]) {
+                i++; // child satisfied
             }
+            j++; // move to next cookie
         }
 
-        return (int) right;
+        return i;
     }
 
     // For VS Code testing
@@ -27,7 +26,13 @@ public class Solution {
 
         Solution sol = new Solution();
 
-        System.out.println(sol.arrangeCoins(5));  // 2
-        System.out.println(sol.arrangeCoins(8));  // 3
+        int[] g1 = {1,2,3};
+        int[] s1 = {1,1};
+
+        int[] g2 = {1,2};
+        int[] s2 = {1,2,3};
+
+        System.out.println(sol.findContentChildren(g1, s1)); // 1
+        System.out.println(sol.findContentChildren(g2, s2)); // 2
     }
 }
