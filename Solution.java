@@ -1,38 +1,26 @@
-import java.util.*;
-
 public class Solution {
 
-    public int findContentChildren(int[] g, int[] s) {
+    public int hammingDistance(int x, int y) {
 
-        Arrays.sort(g); // greed factors
-        Arrays.sort(s); // cookie sizes
+        int xor = x ^ y; // XOR gives differing bits
+        int count = 0;
 
-        int i = 0; // child pointer
-        int j = 0; // cookie pointer
-
-        while (i < g.length && j < s.length) {
-
-            if (s[j] >= g[i]) {
-                i++; // child satisfied
-            }
-            j++; // move to next cookie
+        while (xor != 0) {
+            count += xor & 1; // check last bit
+            xor >>= 1;        // shift right
         }
 
-        return i;
+        return count;
     }
 
-    // For VS Code testing
     public static void main(String[] args) {
 
         Solution sol = new Solution();
 
-        int[] g1 = {1,2,3};
-        int[] s1 = {1,1};
+        int x1 = 1, y1 = 4;
+        int x2 = 3, y2 = 1;
 
-        int[] g2 = {1,2};
-        int[] s2 = {1,2,3};
-
-        System.out.println(sol.findContentChildren(g1, s1)); // 1
-        System.out.println(sol.findContentChildren(g2, s2)); // 2
+        System.out.println(sol.hammingDistance(x1, y1)); // 2
+        System.out.println(sol.hammingDistance(x2, y2)); // 1
     }
 }
