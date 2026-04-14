@@ -1,26 +1,40 @@
+
 public class Solution {
 
-    public int hammingDistance(int x, int y) {
+    public String licenseKeyFormatting(String s, int k) {
+        StringBuilder cleaned = new StringBuilder();
 
-        int xor = x ^ y; // XOR gives differing bits
-        int count = 0;
-
-        while (xor != 0) {
-            count += xor & 1; // check last bit
-            xor >>= 1;        // shift right
+        for (char c : s.toCharArray()) {
+            if (c != '-') {
+                cleaned.append(Character.toUpperCase(c));
+            }
         }
 
-        return count;
+        StringBuilder result = new StringBuilder();
+        int count = 0;
+
+        for (int i = cleaned.length() - 1; i >= 0; i--) {
+            result.append(cleaned.charAt(i));
+            count++;
+
+            if (count == k && i != 0) {
+                result.append('-');
+                count = 0;
+            }
+        }
+
+        return result.reverse().toString();
     }
 
     public static void main(String[] args) {
-
         Solution sol = new Solution();
 
-        int x1 = 1, y1 = 4;
-        int x2 = 3, y2 = 1;
+        String s1 = "5F3Z-2e-9-w";
+        int k1 = 4;
+        System.out.println(sol.licenseKeyFormatting(s1, k1)); // Output: 5F3Z-2E9W
 
-        System.out.println(sol.hammingDistance(x1, y1)); // 2
-        System.out.println(sol.hammingDistance(x2, y2)); // 1
+        String s2 = "2-5g-3-J";
+        int k2 = 2;
+        System.out.println(sol.licenseKeyFormatting(s2, k2)); // Output: 2-5G-3J
     }
 }
