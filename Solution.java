@@ -1,40 +1,29 @@
-
 public class Solution {
 
-    public String licenseKeyFormatting(String s, int k) {
-        StringBuilder cleaned = new StringBuilder();
+    public int[] constructRectangle(int area) {
 
-        for (char c : s.toCharArray()) {
-            if (c != '-') {
-                cleaned.append(Character.toUpperCase(c));
-            }
+        int w = (int) Math.sqrt(area);
+
+        // find the largest factor <= sqrt(area)
+        while (area % w != 0) {
+            w--;
         }
 
-        StringBuilder result = new StringBuilder();
-        int count = 0;
+        int l = area / w;
 
-        for (int i = cleaned.length() - 1; i >= 0; i--) {
-            result.append(cleaned.charAt(i));
-            count++;
-
-            if (count == k && i != 0) {
-                result.append('-');
-                count = 0;
-            }
-        }
-
-        return result.reverse().toString();
+        return new int[]{l, w};
     }
 
     public static void main(String[] args) {
+
         Solution sol = new Solution();
 
-        String s1 = "5F3Z-2e-9-w";
-        int k1 = 4;
-        System.out.println(sol.licenseKeyFormatting(s1, k1)); // Output: 5F3Z-2E9W
+        int area1 = 4;
+        int[] res1 = sol.constructRectangle(area1);
+        System.out.println(res1[0] + " " + res1[1]); // 2 2
 
-        String s2 = "2-5g-3-J";
-        int k2 = 2;
-        System.out.println(sol.licenseKeyFormatting(s2, k2)); // Output: 2-5G-3J
+        int area2 = 37;
+        int[] res2 = sol.constructRectangle(area2);
+        System.out.println(res2[0] + " " + res2[1]); // 37 1
     }
 }
