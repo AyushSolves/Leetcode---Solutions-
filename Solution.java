@@ -1,29 +1,41 @@
+import java.util.*;
+
 public class Solution {
 
-    public int[] constructRectangle(int area) {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
 
-        int w = (int) Math.sqrt(area);
+        Map<Integer, Integer> map = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
 
-        // find the largest factor <= sqrt(area)
-        while (area % w != 0) {
-            w--;
+        for (int num : nums2) {
+            while (!stack.isEmpty() && stack.peek() < num) {
+                map.put(stack.pop(), num);
+            }
+            stack.push(num);
         }
 
-        int l = area / w;
+        // Remaining elements → no greater element
+        while (!stack.isEmpty()) {
+            map.put(stack.pop(), -1);
+        }
 
-        return new int[]{l, w};
+        // Build result for nums1
+        int[] result = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            result[i] = map.get(nums1[i]);
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
-
         Solution sol = new Solution();
 
-        int area1 = 4;
-        int[] res1 = sol.constructRectangle(area1);
-        System.out.println(res1[0] + " " + res1[1]); // 2 2
+        int[] nums1 = {4, 1, 2};
+        int[] nums2 = {1, 3, 4, 2};
 
-        int area2 = 37;
-        int[] res2 = sol.constructRectangle(area2);
-        System.out.println(res2[0] + " " + res2[1]); // 37 1
+        int[] res = sol.nextGreaterElement(nums1, nums2);
+
+        System.out.println(Arrays.toString(res)); // [-1, 3, -1]
     }
 }
