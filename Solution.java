@@ -1,41 +1,36 @@
-import java.util.*;
-
 public class Solution {
 
-    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-
-        Map<Integer, Integer> map = new HashMap<>();
-        Stack<Integer> stack = new Stack<>();
-
-        for (int num : nums2) {
-            while (!stack.isEmpty() && stack.peek() < num) {
-                map.put(stack.pop(), num);
-            }
-            stack.push(num);
+    public String convertToBase7(int num) {
+        if (num == 0) {
+            return "0";
         }
 
-        // Remaining elements → no greater element
-        while (!stack.isEmpty()) {
-            map.put(stack.pop(), -1);
+        boolean negative = false;
+
+        if (num < 0) {
+            negative = true;
+            num = -num;
         }
 
-        // Build result for nums1
-        int[] result = new int[nums1.length];
-        for (int i = 0; i < nums1.length; i++) {
-            result[i] = map.get(nums1[i]);
+        String result = "";
+
+        while (num > 0) {
+            result = (num % 7) + result;
+            num = num / 7;
+        }
+
+        if (negative) {
+            result = "-" + result;
         }
 
         return result;
     }
 
+    // For VS Code testing
     public static void main(String[] args) {
         Solution sol = new Solution();
 
-        int[] nums1 = {4, 1, 2};
-        int[] nums2 = {1, 3, 4, 2};
-
-        int[] res = sol.nextGreaterElement(nums1, nums2);
-
-        System.out.println(Arrays.toString(res)); // [-1, 3, -1]
+        System.out.println(sol.convertToBase7(100)); // Output: 202
+        System.out.println(sol.convertToBase7(-7));  // Output: -10
     }
 }
